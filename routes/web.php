@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\OrganisateurController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,4 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::middleware(['auth', 'verified'])->prefix('organisateur')->group(function () {
+    Route::get('/dashboard', [OrganisateurController::class, 'index'])->name('organisateur.dashboard');
+});
+// web.php
+Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+Route::post('/events', [EventController::class, 'store'])->name('events.store');
+Route::get('/events/{id}/edit', [EventController::class, 'edit'])->name('events.edit');
+Route::put('/events/{id}', [EventController::class, 'update'])->name('events.update');
+Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 require __DIR__.'/auth.php';
