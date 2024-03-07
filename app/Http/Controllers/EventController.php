@@ -89,5 +89,21 @@ class EventController extends Controller
     {
         return view('events.show', compact('event'));
     }
+
+public function dashboard()
+{
+    $events = Event::paginate(10);
+    return view('dashboard', compact('events'));
+}
+
+public function search(Request $request)
+{
+    $search = $request->get('search');
+
+    $events = Event::where('title', 'like', '%' . $search . '%')->get();
+
+    return view('dashboard', compact('events'));
+}
+
 }
 
