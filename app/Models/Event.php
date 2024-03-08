@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Category;
+
 class Event extends Model
 {
     use HasFactory;
@@ -14,13 +16,18 @@ class Event extends Model
         'description',
         'date',
         'location',
-        'category',
+        'category_id', 
         'available_seats',
-        // Ajoutez d'autres champs ici si nécessaire
+        'user_id',
     ];
 
     public function organisateur()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

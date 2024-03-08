@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,28 +12,36 @@ class EventController extends Controller
     // Afficher le formulaire de création d'événement
     public function create()
     {
-        return view('events.create');
+        $categories = Category::all();
+        return view('events.create', ['categories' => $categories]);
     }
 
     // Enregistrer un nouvel événement
     public function store(Request $request)
     {
+        
         // Validation des données
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'date' => 'required|date',
             'location' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
+            'category_id' => 'required|integer', 
             'available_seats' => 'required|integer|min:1',
         ]);
-
-        // Récupérer l'ID de l'utilisateur connecté
+        
+        
         $user_id = Auth::id();
 
-        // Créer un nouvel événement avec l'ID de l'utilisateur
-        $event = new Event($validatedData);
-        $event->user_id = $user_id;
+        $event = new Event([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'date' => $validatedData['date'],
+            'location' => $validatedData['location'],
+            'category_id' => $validatedData['category_id'], 
+            'available_seats' => $validatedData['available_seats'],
+            'user_id' => $user_id,
+        ]);
         $event->save();
 
         // Redirection avec un message de succès
@@ -43,7 +52,8 @@ class EventController extends Controller
     public function edit($id)
     {
         $event = Event::findOrFail($id);
-        return view('events.edit', compact('event'));
+        $categories = Category::all();
+        return view('events.edit', compact('event', 'categories'));
     }
 
     // Mettre à jour un événement
@@ -54,7 +64,7 @@ class EventController extends Controller
             'description' => 'required|string',
             'date' => 'required|date',
             'location' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
+            'category_id' => 'required|string|max:255',
             'available_seats' => 'required|integer|min:1',
         ]);
 
@@ -90,20 +100,33 @@ class EventController extends Controller
         return view('events.show', compact('event'));
     }
 
-public function dashboard()
-{
-    $events = Event::paginate(10);
-    return view('dashboard', compact('events'));
+
+    public function dashboard()
+    {
+        $categories = Category::all();
+        $events = Event::paginate(10);
+        return view('dashboard', compact('events','categories'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+
+        $events = Event::where('title', 'like', '%' . $search . '%')->get();
+
+        return view('dashboard', compact('events'));
+    }
+
+    public function eventsByCategory(Request $request, $categoryId)
+    {
+        // Récupérer les événements de la catégorie spécifiée
+        $events = Event::whereHas('category', function ($query) use ($categoryId) {
+            $query->where('id', $categoryId);
+        })->paginate(10);
+
+        // Vous pouvez également récupérer la catégorie pour affichage dans votre vue si nécessaire
+        $category = Category::findOrFail($categoryId);
+
+        return view('events.index', compact('events', 'category'));
+    }
 }
-
-public function search(Request $request)
-{
-    $search = $request->get('search');
-
-    $events = Event::where('title', 'like', '%' . $search . '%')->get();
-
-    return view('dashboard', compact('events'));
-}
-
-}
-

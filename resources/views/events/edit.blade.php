@@ -42,11 +42,16 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="category" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">
+                            <label for="category_id" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">
                                 {{ __('Catégorie') }}:
                             </label>
-                            <input type="text" name="category" id="category" value="{{ $event->category }}" class="form-input w-full" required>
+                            <select name="category_id" id="category_id" class="form-select w-full" required>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" @if($event->category_id == $category->id) selected @endif>{{ $category->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
+                        
 
                         <div class="mb-4">
                             <label for="available_seats" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">

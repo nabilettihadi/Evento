@@ -1,4 +1,3 @@
-<!-- resources/views/events/create.blade.php -->
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -10,39 +9,45 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="container">
-                        <h1>Créer un nouvel événement</h1>
+                    <div class="container mx-auto">
+                        <h1 class="text-2xl font-bold mb-4">Créer un nouvel événement</h1>
                         <form action="{{ route('events.store') }}" method="POST">
                             @csrf
-            <div class="form-group">
-                <label for="title">Titre :</label>
-                <input type="text" name="title" id="title" class="form-control" required>
+                            <div class="mb-4">
+                                <label for="title" class="block text-sm font-medium text-gray-700">Titre :</label>
+                                <input type="text" name="title" id="title" class="mt-1 p-2 w-full border border-gray-300 rounded-md" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="description" class="block text-sm font-medium text-gray-700">Description :</label>
+                                <textarea name="description" id="description" class="mt-1 p-2 w-full border border-gray-300 rounded-md" required></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <label for="date" class="block text-sm font-medium text-gray-700">Date :</label>
+                                <input type="date" name="date" id="date" class="mt-1 p-2 w-full border border-gray-300 rounded-md" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="location" class="block text-sm font-medium text-gray-700">Lieu :</label>
+                                <input type="text" name="location" id="location" class="mt-1 p-2 w-full border border-gray-300 rounded-md" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="category_id" class="block text-sm font-medium text-gray-700">Catégorie :</label>
+                                <select name="category_id" id="category_id" class="mt-1 p-2 w-full border border-gray-300 rounded-md" required>
+                                    <option value="">Sélectionner une catégorie</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label for="available_seats" class="block text-sm font-medium text-gray-700">Nombre de places disponibles :</label>
+                                <input type="number" name="available_seats" id="available_seats" class="mt-1 p-2 w-full border border-gray-300 rounded-md" min="1" required>
+                            </div>
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Créer l'événement</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="description">Description :</label>
-                <textarea name="description" id="description" class="form-control" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="date">Date :</label>
-                <input type="date" name="date" id="date" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="location">Lieu :</label>
-                <input type="text" name="location" id="location" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="category">Catégorie :</label>
-                <input type="text" name="category" id="category" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="available_seats">Nombre de places disponibles :</label>
-                <input type="number" name="available_seats" id="available_seats" class="form-control" min="1" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Créer l'événement</button>
-        </form>
+        </div>
     </div>
-</div>
-</div>
-</div>
-</div>
 </x-app-layout>
+
