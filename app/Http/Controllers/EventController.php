@@ -102,23 +102,23 @@ class EventController extends Controller
 
 
     public function dashboard()
-    {
-        $categories = Category::all();
-        $events = Event::paginate(10);
-        return view('dashboard', compact('events','categories'));
-    }
+{
+    $categories = Category::all();
+    $events = Event::paginate(10);
+    return view('dashboard', compact('events','categories'));
+}
 
     public function search(Request $request)
-    {
-        $search = $request->get('search');
+{
+    $search = $request->get('search');
+    $categories = Category::all();
+    $events = Event::where('title', 'like', '%' . $search . '%')->get();
 
-        $events = Event::where('title', 'like', '%' . $search . '%')->get();
-
-        return view('dashboard', compact('events'));
-    }
+    return view('dashboard', compact('events','categories'));
+}
 
     public function eventsByCategory(Request $request, $categoryId)
-    {
+    {   $categories = Category::all();
         // Récupérer les événements de la catégorie spécifiée
         $events = Event::whereHas('category', function ($query) use ($categoryId) {
             $query->where('id', $categoryId);
@@ -127,6 +127,6 @@ class EventController extends Controller
         // Vous pouvez également récupérer la catégorie pour affichage dans votre vue si nécessaire
         $category = Category::findOrFail($categoryId);
 
-        return view('events.index', compact('events', 'category'));
+        return view('dashboard', compact('events', 'category','categories'));
     }
 }

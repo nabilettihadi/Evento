@@ -22,20 +22,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+// Routes pour l'authentification
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard',  [EventController::class, 'dashboard'])->name('dashboard');
-});
+    Route::get('/dashboard', [EventController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [EventController::class, 'dashboard'])->name('dashboard');
 
-    // Routes pour les organisateurs
-    Route::prefix('organisateur')->group(function () {
-        Route::get('/dashboard', [OrganisateurController::class, 'index'])->name('organisateur.dashboard');
-    });
+    // Reste des routes pour le profil et les organisateurs...
+});
 
-
+// Routes pour les organisateurs
+Route::prefix('organisateur')->group(function () {
+    Route::get('/dashboard', [OrganisateurController::class, 'index'])->name('organisateur.dashboard');
+});
 // Routes pour les événements
 Route::prefix('events')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [EventController::class, 'dashboard'])->name('dashboard');
@@ -45,11 +50,11 @@ Route::prefix('events')->middleware(['auth', 'verified'])->group(function () {
     Route::put('/{id}', [EventController::class, 'update'])->name('events.update');
     Route::delete('/{event}', [EventController::class, 'destroy'])->name('events.destroy');
     Route::get('/{event}', [EventController::class, 'show'])->name('events.show');
-    Route::get('/search', [EventController::class, 'search'])->name('search.events');
-    Route::get('/category/{categoryId}', [EventController::class, 'eventsByCategory'])->name('events.category');
+
 
 });
-
+Route::get('/search', [EventController::class, 'search'])->name('search.events');
+Route::get('/category/{categoryId}', [EventController::class, 'eventsByCategory'])->name('events.category');
 // Routes pour l'administration
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
