@@ -69,4 +69,25 @@ class AdminController extends Controller
         $category->delete();
         return redirect()->route('admin.categories.index')->with('success', 'La catégorie a été supprimée avec succès.');
     }
+
+public function pendingEvents()
+    {
+        $events = Event::where('validated', false)->get();
+        return view('admin.events.pending', compact('events'));
+    }
+
+    public function approveEvent($id)
+    {
+        $event = Event::findOrFail($id);
+        $event->validated = true;
+        $event->save();
+        return redirect()->back()->with('success', 'Event approved successfully.');
+    }
+
+    public function rejectEvent($id)
+    {
+        $event = Event::findOrFail($id);
+        $event->delete();
+        return redirect()->back()->with('success', 'Event rejected successfully.');
+    }
 }

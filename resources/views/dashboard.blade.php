@@ -50,6 +50,11 @@
                                     <a href="{{ route('events.show', $event->id) }}"
                                        class="block w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-center py-2 px-4 rounded">{{ __('Détails') }}</a>
                                 </div>
+                                <form action="{{ route('events.reserve', $event->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold text-center py-2 px-4 rounded">{{ __('Réserver une place') }}</button>
+                                </form>
+                                
                             </div>
                         @endforeach
                     </div>

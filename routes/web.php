@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\OrganisateurController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,7 +51,7 @@ Route::prefix('events')->middleware(['auth', 'verified'])->group(function () {
     Route::put('/{id}', [EventController::class, 'update'])->name('events.update');
     Route::delete('/{event}', [EventController::class, 'destroy'])->name('events.destroy');
     Route::get('/{event}', [EventController::class, 'show'])->name('events.show');
-
+    Route::post('/{event}/reserve', [ReservationController::class, 'reserve'])->name('events.reserve');
 
 });
 Route::get('/search', [EventController::class, 'search'])->name('search.events');
@@ -73,6 +74,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/users', [AdminController::class, 'manageUsers'])->name('admin.users.index');
 });
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/events', [AdminController::class, 'pendingEvents'])->name('admin.events.pending');
+    Route::put('/admin/events/{id}/approve', [AdminController::class, 'approveEvent'])->name('admin.events.approve');
+    Route::put('/admin/events/{id}/reject', [AdminController::class, 'rejectEvent'])->name('admin.events.reject');
+});
 // Auth routes
 require __DIR__.'/auth.php';
 

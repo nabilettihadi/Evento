@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->integer('available_seats');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->boolean('validated')->default(false);
             $table->timestamps();
         });
     }

@@ -19,6 +19,7 @@ class Event extends Model
         'category_id', 
         'available_seats',
         'user_id',
+        'status',
     ];
 
     public function organisateur()
