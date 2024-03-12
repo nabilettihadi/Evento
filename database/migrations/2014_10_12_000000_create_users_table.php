@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['utilisateur', 'organisateur', 'administrateur'])->default('utilisateur');
+            $table->boolean('banned')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

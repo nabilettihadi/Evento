@@ -6,16 +6,60 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        <img src="../../../img/logo1.png" alt="Evento logo" class="block h-13 w-auto fill-current text-gray-800 dark:text-gray-200">
                     </a>
                 </div>
-
+                @if (Auth::check() && Auth::user()->role === 'administrateur')
                 <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.index')">
+                        {{ __('Categories') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
+                        {{ __('Users') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.events.pending')" :active="request()->routeIs('admin.events.pending')">
+                        {{ __('Events') }}
+                    </x-nav-link>
+                </div>
+
+                @elseif (Auth::check() && Auth::user()->role === 'organisateur')
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('organisateur.dashboard')" :active="request()->routeIs('organisateur.dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('reservations.event')" :active="request()->routeIs('reservations.event')">
+                        {{ __('Reservations') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('organisateur.statistiques')" :active="request()->routeIs('organisateur.statistiques')">
+                        {{ __('Statistiques') }}
+                    </x-nav-link>
+                </div>
+                
+                @elseif (Auth::check() && Auth::user()->role === 'utilisateur')
+
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+
+                @endif
+                
             </div>
 
             <!-- Settings Dropdown -->

@@ -14,6 +14,20 @@
                         <form action="{{ route('events.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Validation des réservations :</label>
+                                <div class="mt-1">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="reservation_type" value="automatic" class="form-radio h-4 w-4 text-indigo-600" checked>
+                                        <span class="ml-2">Automatique</span>
+                                    </label>
+                                    <label class="inline-flex items-center ml-6">
+                                        <input type="radio" name="reservation_type" value="manual" class="form-radio h-4 w-4 text-indigo-600">
+                                        <span class="ml-2">Manuelle</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
                                 <label for="title" class="block text-sm font-medium text-gray-700">Titre :</label>
                                 <input type="text" name="title" id="title" class="mt-1 p-2 w-full border border-gray-300 rounded-md" required>
                             </div>

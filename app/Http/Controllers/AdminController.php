@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Event;
 use App\Models\User;
 use App\Models\Category;
@@ -10,15 +11,20 @@ class AdminController extends Controller
 {
 
     public function dashboard()
-{
-    $totalUsers = User::where('role', 'utilisateur')->count();
-    $totalOrganisateurs = User::where('role', 'organisateur')->count();
-    $totalEvents = Event::count();
-    $totalCategories = Category::count();
+    {
+        $totalUsers = User::where('role', 'utilisateur')->count();
+        $totalOrganisateurs = User::where('role', 'organisateur')->count();
+        $totalEvents = Event::count();
+        $totalCategories = Category::count();
 
-    return view('admin.dashboard', compact('totalUsers', 'totalOrganisateurs', 'totalEvents', 'totalCategories'));
-}
+        return view('admin.dashboard', compact('totalUsers', 'totalOrganisateurs', 'totalEvents', 'totalCategories'));
+    }
 
+    public function usersIndex()
+    {
+        $users = User::where('role', '!=', 'administrateur')->get();
+        return view('admin.users.index', compact('users'));
+    }
 
     // Afficher la liste des catégories et le formulaire d'ajout/modification
     public function index()
@@ -70,7 +76,7 @@ class AdminController extends Controller
         return redirect()->route('admin.categories.index')->with('success', 'La catégorie a été supprimée avec succès.');
     }
 
-public function pendingEvents()
+    public function pendingEvents()
     {
         $events = Event::where('validated', false)->get();
         return view('admin.events.pending', compact('events'));
@@ -90,4 +96,25 @@ public function pendingEvents()
         $event->delete();
         return redirect()->back()->with('success', 'Event rejected successfully.');
     }
+
+    public function suspendUser($userId)
+{
+    $user = User::find($userId);
+    if ($user) {
+        $user->banned = 1;
+        $user->save();
+    }
+    return redirect()->back()->with('success', 'Utilisateur suspendu avec succès');
+}
+
+public function unsuspendUser($userId)
+{
+    $user = User::find($userId);
+    if ($user) {
+        $user->banned = 0;
+        $user->save();
+        return redirect()->route('admin.users.index')->with('success', 'L\'utilisateur a été réactivé.');
+    }
+    return redirect()->route('admin.users.index')->with('error', 'Utilisateur non trouvé.');
+}
 }

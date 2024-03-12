@@ -14,7 +14,7 @@
                     @foreach ($categories as $category)
                         <li>
                             <a href="{{ route('events.category', $category->id) }}"
-                               class="text-blue-500 hover:text-blue-600">{{ $category->name }}</a>
+                                class="text-blue-500 hover:text-blue-600">{{ $category->name }}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -25,11 +25,11 @@
                 <h2 class="text-2xl font-semibold mb-4">{{ __('Événements disponibles') }}</h2>
 
                 <form action="{{ route('search.events') }}" method="GET"
-                      class="flex items-center border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden mb-4">
+                    class="flex items-center border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden mb-4">
                     <input type="text" name="search" placeholder="Rechercher par titre..."
-                           class="py-2 px-4 focus:outline-none focus:border-blue-500 flex-1">
+                        class="py-2 px-4 focus:outline-none focus:border-blue-500 flex-1">
                     <button type="submit"
-                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4">{{ __('Rechercher') }}</button>
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4">{{ __('Rechercher') }}</button>
                 </form>
 
                 @if ($events->count() > 0)
@@ -37,8 +37,8 @@
                         @foreach ($events as $event)
                             <div
                                 class="rounded-lg overflow-hidden shadow-lg border border-gray-300 dark:border-gray-700">
-                                <img class="w-full h-40 object-cover"
-                                     src="https://source.unsplash.com/400x300/?event" alt="{{ $event->title }}">
+                                <img class="w-full h-40 object-cover" src="https://source.unsplash.com/400x300/?event"
+                                    alt="{{ $event->title }}">
                                 <div class="p-6">
                                     <h4 class="text-lg font-semibold mb-2">{{ $event->title }}</h4>
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{{ __('Date') }}:
@@ -48,14 +48,20 @@
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{{ __('Catégorie') }}:
                                         {{ $event->category->name }}</p>
                                     <a href="{{ route('events.show', $event->id) }}"
-                                       class="block w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-center py-2 px-4 rounded">{{ __('Détails') }}</a>
+                                        class="block w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold text-center py-2 px-4 rounded">{{ __('Détails') }}</a>
                                 </div>
-                                <form action="{{ route('events.reserve', $event->id) }}" method="POST">
+                                <form action="{{ route('events.reserve.form', $event->id) }}" method="GET">
                                     @csrf
-                                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold text-center py-2 px-4 rounded">{{ __('Réserver une place') }}</button>
+                                    <button type="submit"
+                                        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold text-center py-2 px-4 rounded">{{ __('Réserver une place') }}</button>
                                 </form>
-                                
+
+                               
                             </div>
+                            @if ($event->reservation && $event->reservation->status === 'accepted')
+                            <a href="{{ route('reservations.ticket', $event->reservation->id) }}"
+                                class="block mt-2 text-center text-blue-500 hover:text-blue-600">{{ __('Voir le ticket') }}</a>
+                        @endif
                         @endforeach
                     </div>
                 @else

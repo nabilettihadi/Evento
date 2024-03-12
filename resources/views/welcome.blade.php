@@ -13,12 +13,6 @@
 <nav class="bg-gray-800 text-white py-4">
     <div class="container mx-auto flex justify-between items-center">
         <a href="#" class="text-lg font-bold">Event Platform</a>
-        <div class="flex space-x-4">
-            <a href="#" class="hover:text-gray-300">Home</a>
-            <a href="#" class="hover:text-gray-300">Events</a>
-            <a href="#" class="hover:text-gray-300">About</a>
-            <a href="#" class="hover:text-gray-300">Contact</a>
-        </div>
     </div>
 </nav>
 
@@ -39,31 +33,31 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Event Card -->
             <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="https://via.placeholder.com/400x200" alt="Event Image" class="w-full h-40 object-cover">
+                <img src="https://source.unsplash.com/400x300/?event" alt="Event Image" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-xl font-bold mb-2">Event Title</h3>
                     <p class="text-gray-600 mb-2">Date: January 1, 2025</p>
-                    <p class="text-gray-600 mb-4">Location: Example City</p>
-                    <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full inline-block">View Details</a>
+                    <p class="text-gray-600 mb-4">Location: New York City</p>
+
                 </div>
             </div>
             <!-- Repeat Event Cards Here -->
             <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="https://via.placeholder.com/400x200" alt="Event Image" class="w-full h-40 object-cover">
+                <img src="https://source.unsplash.com/400x300/?event" alt="Event Image" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-xl font-bold mb-2">Event Title</h3>
                     <p class="text-gray-600 mb-2">Date: January 1, 2025</p>
-                    <p class="text-gray-600 mb-4">Location: Example City</p>
-                    <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full inline-block">View Details</a>
+                    <p class="text-gray-600 mb-4">Location: Marrakech City</p>
+
                 </div>
             </div>
             <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src="https://via.placeholder.com/400x200" alt="Event Image" class="w-full h-40 object-cover">
+                <img src="https://source.unsplash.com/400x300/?event" alt="Event Image" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-xl font-bold mb-2">Event Title</h3>
                     <p class="text-gray-600 mb-2">Date: January 1, 2025</p>
-                    <p class="text-gray-600 mb-4">Location: Example City</p>
-                    <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full inline-block">View Details</a>
+                    <p class="text-gray-600 mb-4">Location: Berlin City</p>
+
                 </div>
             </div>
         </div>

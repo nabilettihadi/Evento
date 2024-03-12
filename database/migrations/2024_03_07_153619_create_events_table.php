@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('available_seats');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->boolean('validated')->default(false);
+            $table->enum('reservation_type', ['automatic', 'manual'])->default('automatic');
             $table->timestamps();
         });
     }
